@@ -1,14 +1,18 @@
 function [O2_sim, O2_exp] = main_O2_ode15s_simple_model_result_calculate_ineff(analysis_name,result_name)
 
 
-load(['results/', analysis_name, '/' result_name],'tablek','knames','tabley')
-indepkres = find(tablek.independent);
-resnamesk = knames(indepkres);
-resvalsk = tablek.base_val(indepkres);
+load(['results/', analysis_name, '/' result_name],'tablek','knames','tabley','xopt')
+
 indepyres = find(tabley.independent);
 ynames = tabley.name;
 resnamesy = ynames(indepyres);
 resvalsy = tabley.base_val(indepyres);
+
+
+indepkres = find(tablek.independent);
+resnamesk = knames(indepkres);
+resvalsk = tablek.base_val(indepkres);
+
 resnames = [resnamesy;resnamesk];
 
 file1 = [analysis_name,'/O2_exp.csv'];
@@ -35,7 +39,8 @@ n_trains = tbl1.n_trains;
 
 file1 = [analysis_name,'/LaiskConstants.xls'];
 tablek = readtable(file1);
-tabley.base_val(indepyres) = resvalsy;
+tablek.base_val(indepkres) = resvalsk;
+tablek.independent(indepkres) = 1;
 indepk = find(tablek.independent);
 lbk = tablek.lb(indepk);
 ubk = tablek.ub(indepk);
@@ -45,6 +50,7 @@ k_std = tablek.base_val;
 file2 = [analysis_name,'/LaiskY.xls'];
 tabley = readtable(file2);
 tabley.base_val(indepyres) = resvalsy;
+tabley.independent(indepyres) = 1;
 indepy = find(tabley.independent);
 y_std = tabley.base_val;
 
@@ -259,19 +265,10 @@ yrprao = find(contains(species,'YrPrAo'));
 yrprar = find(contains(species,'YrPrAr'));
 Fluorescence_y_inds = {yopoax;yoprao;yoprar;yrprao;yrprar};
 
-load(['results/', analysis_name, '/' result_name],'xopt','O2_sim_opt','O2_exp')
-
-for i = 1:length(xnamesk)
-    for j = 1:length(indepk)
-    count = strcmp(xnamesk(i),resnamesk(j));
-        if count == 1
-           x0(j) = xopt(i);           
-        end 
-    end
-end
-
-n_flashes = 5;
+load(['results/', analysis_name, '/' result_name],'O2_sim_opt','O2_exp')
 xopt = x0;
+n_flashes = 40;
+
 
 [O2_sim] = calc_O2_simple_model_ode15s(xopt, n_trains, n_flashes, ...
                     flash_duration, flash_interval, train_interval, ... 

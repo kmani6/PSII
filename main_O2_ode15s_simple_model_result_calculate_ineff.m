@@ -1,14 +1,16 @@
 function [O2_sim, O2_exp] = main_O2_ode15s_simple_model_result_calculate_ineff(analysis_name,result_name)
 
 
-load(['results/', analysis_name, '/' result_name],'tablek','knames','tabley')
-indepkres = find(tablek.independent);
-resnamesk = knames(indepkres);
-resvalsk = tablek.base_val(indepkres);
+load(['results/', analysis_name, '/' result_name],'tablek','knames','tabley','xopt')
+
 indepyres = find(tabley.independent);
 ynames = tabley.name;
 resnamesy = ynames(indepyres);
-resvalsy = tabley.base_val(indepyres);
+resvalsy = xopt(1:length(indepyres));
+
+indepkres = find(tablek.independent);
+resnamesk = knames(indepkres);
+resvalsk = xopt(length(indepyres)+1:end);
 resnames = [resnamesy;resnamesk];
 
 file1 = [analysis_name,'/O2_exp.csv'];
@@ -264,7 +266,7 @@ Fluorescence_y_inds = {yopoax;yoprao;yoprar;yrprao;yrprar};
 load(['results/', analysis_name, '/' result_name],'O2_sim_opt','O2_exp')
 xopt = x0;
 n_flashes = 40;
-
+disp(resnames)
 
 [O2_sim] = calc_O2_simple_model_ode15s(xopt, n_trains, n_flashes, ...
                     flash_duration, flash_interval, train_interval, ... 
