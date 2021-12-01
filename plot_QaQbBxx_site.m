@@ -48,7 +48,7 @@ for i  = 2:length(ys)
     S2YOPRAOBRO = [S2YOPRAOBRO, (ys{i}(S2YoPrAoBro,:))];
     EMPTYS2 = [EMPTYS2, (ys{i}(emptyS2,:))];
     S3YRPRARBRR = [S3YRPRARBRR, (ys{i}(S3YrPrArBrr,:))];
-    S1YRPRAOBRO = [S1YRPRAOBRO, (ys{i}(S2YrPrAoBro,:))];
+    %S1YRPRAOBRO = [S1YRPRAOBRO, (ys{i}(S2YrPrAoBro,:))];
     
     t = [t,ts{i}];    
 end

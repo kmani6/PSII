@@ -41,7 +41,7 @@ k(kidcs.Div1) = Div1Val;
 k(kidcs.Div2) = Div2Val;
 k(kidcs.Div3) = Div3Val; 
 k(kidcs.Div4) = Div4Val;
-k(kidcs.n1idx) = n1;
+k(kidcs.n1idx) = n1; 
 FvFm = zeros(n_trains*n_flashes,1);
 
 mult1 = kidcs.mult1;
