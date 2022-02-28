@@ -259,7 +259,7 @@ Fluorescence_y_inds = {yopoax;yoprao;yoprar;yrprao;yrprar};
 
 load(['results/', analysis_name, '/' result_name],'O2_sim_opt','O2_exp')
 xopt = x0;
-n_flashes = 15;
+n_flashes = 30;
 %disp(resnames)
 
 [O2_sim] = calc_O2_simple_model_ode15s(xopt, n_trains, n_flashes, ...
@@ -275,15 +275,16 @@ n_flashes = 15;
                     tablek, tabley,... information on the k and y variables
                     kconst, rate_inds, S, species, knames, species_idcs, Rknames); % model specific variables
 
-O2_sim = O2_sim/mean(O2_sim);
+O2_sim_norm = O2_sim/mean(O2_sim);
 O2_sim_opt = O2_sim_opt/mean(O2_sim_opt);
 figure
 plot(1:length(O2_exp), O2_exp,'-o', 'color','black','DisplayName','O2_experimental');
 hold on;
-plot(1:length(O2_sim), O2_sim,'-o', 'color','red','DisplayName','O2_experimental');
-[RMSE] = sqrt(mean((O2_exp(1:n_flashes)-O2_sim(1:n_flashes)).^2))
-
-figure; plot(1:length(O2_sim), O2_sim,'-o', 'color','red','DisplayName','O2_experimental');
+plot(1:length(O2_sim_norm), O2_sim_norm,'-o', 'color','red','DisplayName','O2_experimental');
+[RMSE] = sqrt(mean((O2_exp(1:n_flashes)-O2_sim_norm(1:n_flashes)).^2))
+plot_S4_states(species, ys, ts)
+plot_S3_states(species, ys, ts)
+figure; plot(1:length(O2_sim), O2_sim_norm,'-o', 'color','red','DisplayName','O2_experimental');
 
 foo = 1;
 f = plot_pq_redox_state(species, ys, ts);
