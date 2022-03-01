@@ -282,8 +282,11 @@ plot(1:length(O2_exp), O2_exp,'-o', 'color','black','DisplayName','O2_experiment
 hold on;
 plot(1:length(O2_sim_norm), O2_sim_norm,'-o', 'color','red','DisplayName','O2_experimental');
 [RMSE] = sqrt(mean((O2_exp(1:n_flashes)-O2_sim_norm(1:n_flashes)).^2))
-plot_S4_states(species, ys, ts)
+plot_S0_states(species, ys, ts)
+plot_S1_states(species, ys, ts)
+plot_S2_states(species, ys, ts)
 plot_S3_states(species, ys, ts)
+plot_S4_states(species, ys, ts)
 figure; plot(1:length(O2_sim), O2_sim_norm,'-o', 'color','red','DisplayName','O2_experimental');
 
 foo = 1;
