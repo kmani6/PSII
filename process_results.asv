@@ -1,0 +1,18 @@
+function process_results(analysis_name)
+
+results_dir = ['results/', analysis_name];
+results = dir(results_dir);
+
+fval_opt = inf;
+for name = result_names.name
+    fprintf(name)
+    %result_name = [analysis_name, ]
+    
+    
+    
+end
+
+foo = 1;
+
+
+end
